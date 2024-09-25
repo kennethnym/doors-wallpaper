@@ -4,9 +4,11 @@ import * as MediaLibrary from "expo-media-library";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Image, Text, View, TouchableOpacity, Alert } from "react-native";
+import { useState } from "react";
 
 export default function WallpaperPage() {
 	const selectedWallpaper = useStore((store) => store.selectedWallpaper);
+	const [isDownloading, setIsDownloading] = useState(false);
 	const router = useRouter();
 
 	if (!selectedWallpaper) {
@@ -20,28 +22,35 @@ export default function WallpaperPage() {
 			return;
 		}
 
-		const permStatus = await MediaLibrary.requestPermissionsAsync();
-		if (permStatus.status != MediaLibrary.PermissionStatus.GRANTED) {
-			Alert.alert(
-				"Media library access required",
-				"Doors need access to your media library in order to save wallpapers.",
+		setIsDownloading(true);
+
+		try {
+			const permStatus = await MediaLibrary.requestPermissionsAsync();
+			if (permStatus.status != MediaLibrary.PermissionStatus.GRANTED) {
+				Alert.alert(
+					"Media library access required",
+					"Doors need access to your media library in order to save wallpapers.",
+				);
+				return;
+			}
+
+			const result = await FileSystem.downloadAsync(
+				selectedWallpaper.secure_url,
+				`${FileSystem.documentDirectory}${selectedWallpaper.asset_id}.${selectedWallpaper.format}`,
 			);
-			return;
+			await MediaLibrary.createAssetAsync(result.uri);
+			Alert.alert(
+				"Wallpaper saved successfully",
+				"You can change the wallpaper in Settings.",
+			);
+		} catch {
+			Alert.alert(
+				"Unable to download wallpaper",
+				"Check your internet connection. Otherwise, it's probably our fault.",
+			);
+		} finally {
+			setIsDownloading(false);
 		}
-
-		console.log(
-			`${FileSystem.documentDirectory}${selectedWallpaper.asset_id}.${selectedWallpaper.format}`,
-		);
-
-		const result = await FileSystem.downloadAsync(
-			selectedWallpaper.secure_url,
-			`${FileSystem.documentDirectory}${selectedWallpaper.asset_id}.${selectedWallpaper.format}`,
-		);
-		await MediaLibrary.createAssetAsync(result.uri);
-		Alert.alert(
-			"Wallpaper saved successfully",
-			"You can change the wallpaper in Settings.",
-		);
 	}
 
 	return (
@@ -83,9 +92,12 @@ export default function WallpaperPage() {
 					) : null}
 				</View>
 				<TouchableOpacity
+					disabled={isDownloading}
 					className="w-full"
 					onPress={() => {
-						downloadWallpaper();
+						if (!isDownloading) {
+							downloadWallpaper();
+						}
 					}}
 				>
 					<View
@@ -94,7 +106,9 @@ export default function WallpaperPage() {
 							backgroundColor: "#E5202B",
 						}}
 					>
-						<Text className="text-white">Download</Text>
+						<Text className="text-white">
+							{isDownloading ? "Downloading…" : "Download"}
+						</Text>
 						<Text className="text-white opacity-80 text-xs">
 							{selectedWallpaper.width}x{selectedWallpaper.height}
 						</Text>
