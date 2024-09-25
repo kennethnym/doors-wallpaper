@@ -46,79 +46,43 @@ export default function WallpaperPage() {
 	}
 
 	return (
-		<SafeAreaView style={{ flex: 1, width: "100%", height: "100%" }}>
+		<View className="flex-1 w-full h-full">
 			<Image
-				style={{ flex: 1, width: "100%", height: "100%" }}
+				className="flex-1 w-full h-full"
 				source={{ uri: selectedWallpaper.secure_url }}
 			/>
-			<View
-				style={{
-					position: "absolute",
-					top: 0,
-					left: 0,
-					right: 0,
-					flexDirection: "row",
-					paddingHorizontal: 16,
-					paddingVertical: 32,
-				}}
-			>
+			<View className="absolute top-0 left-0 right-0 flex-row px-4 py-8">
 				<TouchableOpacity
 					onPress={() => {
 						router.dismiss();
 					}}
 				>
 					<View
-						style={{
-							width: 32,
-							height: 32,
-							borderRadius: 16,
-							backgroundColor: "rgba(0, 0, 0, 0.8)",
-							alignItems: "center",
-							justifyContent: "center",
-							padding: 5,
-						}}
+						className="w-8 h-8 rounded-full items-center justify-center"
+						style={{ backgroundColor: "rgba(0, 0, 0, 0.8)", padding: 5 }}
 					>
 						<Ionicons size={24} name="close" color="white" />
 					</View>
 				</TouchableOpacity>
 			</View>
-			<View
-				style={{
-					position: "absolute",
-					bottom: 0,
-					left: 0,
-					right: 0,
-					height: "30%",
-					width: "100%",
-					backgroundColor: "#0A0A0A",
-					justifyContent: "space-between",
-					alignItems: "center",
-					padding: 24,
-				}}
-			>
-				<Text style={{ fontWeight: "bold", fontSize: 24, color: "white" }}>
-					{imageName}
-				</Text>
+			<View className="absolute bottom-0 left-0 right-0 h-1/3 w-full bg-neutral-800 justify-between items-center p-8">
+				<Text className="font-bold text-2xl text-white">{imageName}</Text>
 				<TouchableOpacity
-					style={{ width: "100%" }}
+					className="w-full"
 					onPress={() => {
 						downloadWallpaper();
 					}}
 				>
 					<View
+						className="w-full rounded justify-center items-center p-4"
 						style={{
-							width: "100%",
-							borderRadius: 8,
 							backgroundColor: "#E5202B",
-							justifyContent: "center",
-							alignItems: "center",
-							padding: 8,
 						}}
 					>
-						<Text style={{ color: "white" }}>Download</Text>
+						<Text className="text-white">Download</Text>
 					</View>
 				</TouchableOpacity>
 			</View>
-		</SafeAreaView>
+		</View>
 	);
 }
