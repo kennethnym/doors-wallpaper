@@ -1,6 +1,7 @@
 interface ImageAsset {
 	asset_id: string;
 	public_id: string;
+	display_name: string;
 	format: "jpg" | "png" | "heic";
 	version: number;
 	resource_type: "image";

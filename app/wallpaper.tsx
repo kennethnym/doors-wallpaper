@@ -16,7 +16,7 @@ export default function WallpaperPage() {
 		return null;
 	}
 
-	const imageName = selectedWallpaper.public_id.replace("wallpaper/", "");
+	const imageName = selectedWallpaper.display_name;
 
 	async function downloadWallpaper() {
 		if (!selectedWallpaper) {

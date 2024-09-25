@@ -75,7 +75,7 @@ export default function HomeScreen() {
 									}}
 								>
 									<Text className="text-white opacity-80">
-										{item.public_id.replace("wallpaper/", "")}
+										{item.display_name}
 									</Text>
 								</View>
 							</View>
