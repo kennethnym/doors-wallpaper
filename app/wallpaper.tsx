@@ -4,7 +4,6 @@ import * as MediaLibrary from "expo-media-library";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Image, Text, View, TouchableOpacity, Alert } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function WallpaperPage() {
 	const selectedWallpaper = useStore((store) => store.selectedWallpaper);
