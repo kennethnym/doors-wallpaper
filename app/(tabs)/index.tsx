@@ -65,7 +65,7 @@ export default function HomeScreen() {
 								>
 									<Image
 										className="w-full h-60"
-										source={{ uri: item.secure_url }}
+										source={{ uri: item.thumbnail_url }}
 									/>
 								</TouchableOpacity>
 								<View
