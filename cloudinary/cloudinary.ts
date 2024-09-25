@@ -12,6 +12,7 @@ interface ImageAsset {
 	thumbnail_url: string;
 	source_url?: string;
 	creator_name?: string;
+	is_ai_generated?: boolean;
 }
 
 export type { ImageAsset };

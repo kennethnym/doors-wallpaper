@@ -88,6 +88,7 @@ export default function WallpaperPage() {
 					{selectedWallpaper.creator_name ? (
 						<Text className="text-white text-center opacity-50 text-xs">
 							{selectedWallpaper.creator_name}
+							{selectedWallpaper.is_ai_generated ? "· AI Generated" : ""}
 						</Text>
 					) : null}
 					{selectedWallpaper.source_url ? (
