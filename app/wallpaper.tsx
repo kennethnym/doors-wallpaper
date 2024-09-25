@@ -1,6 +1,7 @@
 import { useStore } from "@/store/store";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
+import * as Linking from "expo-linking";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Image, Text, View, TouchableOpacity, Alert } from "react-native";
@@ -53,6 +54,12 @@ export default function WallpaperPage() {
 		}
 	}
 
+	async function openSourceUrl() {
+		if (selectedWallpaper?.source_url) {
+			Linking.openURL(selectedWallpaper.source_url);
+		}
+	}
+
 	return (
 		<View className="flex-1 w-full h-full">
 			<Image
@@ -84,7 +91,11 @@ export default function WallpaperPage() {
 						</Text>
 					) : null}
 					{selectedWallpaper.source_url ? (
-						<TouchableOpacity>
+						<TouchableOpacity
+							onPress={() => {
+								openSourceUrl();
+							}}
+						>
 							<Text className="text-white underline text-center opacity-50 text-xs">
 								{selectedWallpaper.source_url}
 							</Text>
