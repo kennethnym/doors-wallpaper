@@ -65,7 +65,23 @@ export default function WallpaperPage() {
 				</TouchableOpacity>
 			</View>
 			<View className="absolute bottom-0 left-0 right-0 h-1/3 w-full bg-neutral-800 justify-between items-center p-8">
-				<Text className="font-bold text-2xl text-white">{imageName}</Text>
+				<View className="flex-col justify-center items-center">
+					<Text className="font-bold text-2xl text-white mb-2">
+						{imageName}
+					</Text>
+					{selectedWallpaper.creator_name ? (
+						<Text className="text-white text-center opacity-50 text-xs">
+							{selectedWallpaper.creator_name}
+						</Text>
+					) : null}
+					{selectedWallpaper.source_url ? (
+						<TouchableOpacity>
+							<Text className="text-white underline text-center opacity-50 text-xs">
+								{selectedWallpaper.source_url}
+							</Text>
+						</TouchableOpacity>
+					) : null}
+				</View>
 				<TouchableOpacity
 					className="w-full"
 					onPress={() => {
@@ -73,12 +89,15 @@ export default function WallpaperPage() {
 					}}
 				>
 					<View
-						className="w-full rounded justify-center items-center p-4"
+						className="w-full rounded justify-center items-center px-4 py-1"
 						style={{
 							backgroundColor: "#E5202B",
 						}}
 					>
 						<Text className="text-white">Download</Text>
+						<Text className="text-white opacity-80 text-xs">
+							{selectedWallpaper.width}x{selectedWallpaper.height}
+						</Text>
 					</View>
 				</TouchableOpacity>
 			</View>
