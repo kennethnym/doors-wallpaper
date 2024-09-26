@@ -29,7 +29,8 @@ export default function HomeScreen() {
 				const images: ImageAsset[] = await res.json();
 				setImages(images);
 				setIsLoading(false);
-			} catch {
+			} catch (err) {
+				console.log(err);
 				Alert.alert(
 					"Unable to fetch wallpaper",
 					"Check your internet connection. Otherwise, it's probably our fault.",
@@ -50,7 +51,7 @@ export default function HomeScreen() {
 					data={images}
 					numColumns={2}
 					ListHeaderComponent={() => (
-						<Text className="px-2 pt-20 text-2xl font-bold text-white">
+						<Text className="px-4 pt-20 pb-4 text-xl font-bold text-center dark:text-white">
 							Wallpapers
 						</Text>
 					)}

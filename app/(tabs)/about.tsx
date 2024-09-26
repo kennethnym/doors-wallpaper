@@ -5,7 +5,9 @@ import * as Linking from "expo-linking";
 export default function AboutPage() {
 	return (
 		<SafeAreaView className="flex-1 items-start p-4">
-			<Text className="pt-20 text-4xl font-bold text-white mb-4">About</Text>
+			<Text className="pt-20 text-4xl font-bold dark:text-white mb-4">
+				About
+			</Text>
 			<View className="flex-col">
 				<AboutItem
 					title="Source Code"
@@ -48,8 +50,8 @@ function AboutItem({
 	return (
 		<TouchableOpacity onPress={onPress}>
 			<View className="flex-col items-start pb-3">
-				<Text className="text-lg font-bold text-white">{title}</Text>
-				<Text className="text-white opacity-50">{description}</Text>
+				<Text className="text-lg font-bold dark:text-white">{title}</Text>
+				<Text className="dark:text-white opacity-50">{description}</Text>
 			</View>
 		</TouchableOpacity>
 	);
