@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Image, Text, View, TouchableOpacity, Alert } from "react-native";
 import { useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function WallpaperPage() {
 	const selectedWallpaper = useStore((store) => store.selectedWallpaper);
@@ -66,7 +67,7 @@ export default function WallpaperPage() {
 				className="flex-1 w-full h-full"
 				source={{ uri: selectedWallpaper.secure_url }}
 			/>
-			<View className="absolute top-0 left-0 right-0 flex-row px-4 py-8">
+			<SafeAreaView className="absolute top-0 left-0 right-0 flex-row px-4">
 				<TouchableOpacity
 					onPress={() => {
 						router.dismiss();
@@ -79,7 +80,7 @@ export default function WallpaperPage() {
 						<Ionicons size={24} name="close" color="white" />
 					</View>
 				</TouchableOpacity>
-			</View>
+			</SafeAreaView>
 			<View className="absolute bottom-0 left-0 right-0 h-1/3 w-full bg-neutral-800 justify-between items-center p-8">
 				<View className="flex-col justify-center items-center">
 					<Text className="font-bold text-2xl text-white mb-2">
