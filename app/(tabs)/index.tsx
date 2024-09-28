@@ -8,6 +8,7 @@ import {
 } from "react-native";
 
 import { useEffect, useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import { type ImageAsset } from "@/cloudinary/cloudinary";
 import { MasonryFlashList } from "@shopify/flash-list";
 import { useRouter } from "expo-router";
@@ -20,33 +21,39 @@ export default function HomeScreen() {
 	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
-		async function fetchWallpapers() {
-			try {
-				setIsLoading(true);
-				const res = await fetch(
-					`${process.env.EXPO_PUBLIC_API_URL}/wallpapers`,
-				);
-				const images: ImageAsset[] = await res.json();
-				setImages(images);
-				setIsLoading(false);
-			} catch (err) {
-				console.log(err);
-				Alert.alert(
-					"Unable to fetch wallpaper",
-					"Check your internet connection. Otherwise, it's probably our fault.",
-				);
-			}
-		}
 		fetchWallpapers();
 	}, []);
 
-	return (
-		<View className="flex-1">
-			{isLoading ? (
+	async function fetchWallpapers() {
+		try {
+			setIsLoading(true);
+			const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/wallpapers`);
+			if (res.status !== 200) {
+				throw new Error("server returned error response");
+			}
+			const images: ImageAsset[] = await res.json();
+			setImages(images);
+		} catch (err) {
+			Alert.alert(
+				"Unable to fetch wallpaper",
+				"Check your internet connection. Otherwise, it's probably our fault.",
+			);
+		} finally {
+			setIsLoading(false);
+		}
+	}
+
+	function content() {
+		if (isLoading) {
+			return (
 				<View className="flex-1 items-center justify-center">
 					<ActivityIndicator />
 				</View>
-			) : (
+			);
+		}
+
+		if (images) {
+			return (
 				<MasonryFlashList
 					data={images}
 					numColumns={2}
@@ -84,7 +91,24 @@ export default function HomeScreen() {
 					)}
 					estimatedItemSize={200}
 				/>
-			)}
-		</View>
-	);
+			);
+		}
+
+		return (
+			<View className="flex-1 items-center justify-center">
+				<TouchableOpacity
+					onPress={() => {
+						fetchWallpapers();
+					}}
+				>
+					<View className="flex-col items-center justify-center space-y-2">
+						<Ionicons name="refresh" size={24} color="white" />
+						<Text className="text-white">Reload</Text>
+					</View>
+				</TouchableOpacity>
+			</View>
+		);
+	}
+
+	return <View className="flex-1">{content()}</View>;
 }
