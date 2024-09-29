@@ -27,7 +27,9 @@ export default function WallpaperPage() {
 		setIsDownloading(true);
 
 		try {
-			const permStatus = await MediaLibrary.requestPermissionsAsync();
+			const permStatus = await MediaLibrary.requestPermissionsAsync(true, [
+				"photo",
+			]);
 			if (permStatus.status != MediaLibrary.PermissionStatus.GRANTED) {
 				Alert.alert(
 					"Media library access required",
