@@ -85,7 +85,10 @@ export default function WallpaperPage() {
 			</SafeAreaView>
 			<View className="absolute bottom-0 left-0 right-0 h-1/3 w-full bg-neutral-800 justify-between items-center p-8">
 				<View className="flex-col justify-center items-center">
-					<Text className="font-bold text-2xl text-white mb-2">
+					<Text
+						numberOfLines={1}
+						className="font-bold text-2xl text-white mb-2"
+					>
 						{imageName}
 					</Text>
 					{selectedWallpaper.creator_name ? (
