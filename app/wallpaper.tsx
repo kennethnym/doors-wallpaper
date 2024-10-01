@@ -6,12 +6,16 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Image, Text, View, TouchableOpacity, Alert } from "react-native";
 import { useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+	SafeAreaView,
+	useSafeAreaInsets,
+} from "react-native-safe-area-context";
 
 export default function WallpaperPage() {
 	const selectedWallpaper = useStore((store) => store.selectedWallpaper);
 	const [isDownloading, setIsDownloading] = useState(false);
 	const router = useRouter();
+	const safeArea = useSafeAreaInsets();
 
 	if (!selectedWallpaper) {
 		return null;
@@ -84,28 +88,35 @@ export default function WallpaperPage() {
 				</TouchableOpacity>
 			</SafeAreaView>
 			<View
-				className="absolute bottom-0 left-0 right-0 h-min w-full justify-between items-center p-8"
-				style={{ backgroundColor: "rgba(0, 0, 0, 0.8) " }}
+				className="absolute bottom-0 left-0 right-0 h-min w-full justify-between items-center px-8"
+				style={{
+					backgroundColor: "rgba(0, 0, 0, 0.8)",
+					paddingTop: 24,
+					paddingBottom: safeArea.bottom + 24,
+				}}
 			>
-				<View className="flex-col justify-center items-center mb-8">
-					{selectedWallpaper.creator_name ? (
-						<Text className="text-white text-center opacity-50 text-xs">
-							{selectedWallpaper.creator_name}
-							{selectedWallpaper.is_ai_generated ? " · AI Generated" : ""}
-						</Text>
-					) : null}
-					{selectedWallpaper.source_url ? (
-						<TouchableOpacity
-							onPress={() => {
-								openSourceUrl();
-							}}
-						>
-							<Text className="text-white underline text-center opacity-50 text-xs">
-								{selectedWallpaper.source_url}
+				{Boolean(selectedWallpaper.creator_name) ||
+				Boolean(selectedWallpaper.source_url) ? (
+					<View className="flex-col justify-center items-center mb-8">
+						{selectedWallpaper.creator_name ? (
+							<Text className="text-white text-center opacity-50 text-xs">
+								{selectedWallpaper.creator_name}
+								{selectedWallpaper.is_ai_generated ? " · AI Generated" : ""}
 							</Text>
-						</TouchableOpacity>
-					) : null}
-				</View>
+						) : null}
+						{selectedWallpaper.source_url ? (
+							<TouchableOpacity
+								onPress={() => {
+									openSourceUrl();
+								}}
+							>
+								<Text className="text-white underline text-center opacity-50 text-xs">
+									{selectedWallpaper.source_url}
+								</Text>
+							</TouchableOpacity>
+						) : null}
+					</View>
+				) : null}
 				<TouchableOpacity
 					disabled={isDownloading}
 					className="w-full"
