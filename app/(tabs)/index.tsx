@@ -63,30 +63,18 @@ export default function HomeScreen() {
 						</Text>
 					)}
 					renderItem={({ item }) => (
-						<View className="w-full p-2">
-							<View className="w-full relative rounded overflow-hidden">
-								<TouchableOpacity
-									onPress={() => {
-										setSelectedWallpaper(item);
-										router.push("/wallpaper");
-									}}
-								>
-									<Image
-										className="w-full h-60"
-										source={{ uri: item.thumbnail_url }}
-									/>
-								</TouchableOpacity>
-								<View
-									className="w-full absolute bottom-0 left-0 right-0 p-2"
-									style={{
-										backgroundColor: "rgba(0, 0, 0, 0.8)",
-									}}
-								>
-									<Text className="text-white opacity-80">
-										{item.display_name}
-									</Text>
-								</View>
-							</View>
+						<View className="w-full relative overflow-hidden">
+							<TouchableOpacity
+								onPress={() => {
+									setSelectedWallpaper(item);
+									router.push("/wallpaper");
+								}}
+							>
+								<Image
+									className="w-full h-60"
+									source={{ uri: item.thumbnail_url }}
+								/>
+							</TouchableOpacity>
 						</View>
 					)}
 					estimatedItemSize={200}
