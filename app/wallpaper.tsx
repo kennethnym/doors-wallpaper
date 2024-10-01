@@ -83,14 +83,11 @@ export default function WallpaperPage() {
 					</View>
 				</TouchableOpacity>
 			</SafeAreaView>
-			<View className="absolute bottom-0 left-0 right-0 h-1/3 w-full bg-neutral-800 justify-between items-center p-8">
-				<View className="flex-col justify-center items-center">
-					<Text
-						numberOfLines={1}
-						className="font-bold text-2xl text-white mb-2"
-					>
-						{imageName}
-					</Text>
+			<View
+				className="absolute bottom-0 left-0 right-0 h-min w-full justify-between items-center p-8"
+				style={{ backgroundColor: "rgba(0, 0, 0, 0.8) " }}
+			>
+				<View className="flex-col justify-center items-center mb-8">
 					{selectedWallpaper.creator_name ? (
 						<Text className="text-white text-center opacity-50 text-xs">
 							{selectedWallpaper.creator_name}
