@@ -1,6 +1,5 @@
 import {
 	View,
-	Image,
 	Text,
 	TouchableOpacity,
 	ActivityIndicator,
@@ -8,6 +7,7 @@ import {
 } from "react-native";
 
 import { useEffect, useState } from "react";
+import { Image } from "expo-image";
 import { Ionicons } from "@expo/vector-icons";
 import { type ImageAsset } from "@/cloudinary/cloudinary";
 import { MasonryFlashList } from "@shopify/flash-list";
@@ -72,6 +72,7 @@ export default function HomeScreen() {
 							>
 								<Image
 									className="w-full h-60"
+									recyclingKey={item.thumbnail_url}
 									source={{ uri: item.thumbnail_url }}
 								/>
 							</TouchableOpacity>
