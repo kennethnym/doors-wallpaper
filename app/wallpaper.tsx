@@ -21,8 +21,6 @@ export default function WallpaperPage() {
 		return null;
 	}
 
-	const imageName = selectedWallpaper.display_name;
-
 	async function downloadWallpaper() {
 		if (!selectedWallpaper) {
 			return;
@@ -31,9 +29,7 @@ export default function WallpaperPage() {
 		setIsDownloading(true);
 
 		try {
-			const permStatus = await MediaLibrary.requestPermissionsAsync(true, [
-				"photo",
-			]);
+			const permStatus = await MediaLibrary.requestPermissionsAsync(true);
 			if (permStatus.status != MediaLibrary.PermissionStatus.GRANTED) {
 				Alert.alert(
 					"Media library access required",
@@ -46,7 +42,7 @@ export default function WallpaperPage() {
 				selectedWallpaper.secure_url,
 				`${FileSystem.documentDirectory}${selectedWallpaper.asset_id}.${selectedWallpaper.format}`,
 			);
-			await MediaLibrary.createAssetAsync(result.uri);
+			await MediaLibrary.saveToLibraryAsync(result.uri);
 			Alert.alert(
 				"Wallpaper saved successfully",
 				"You can change the wallpaper in Settings.",
